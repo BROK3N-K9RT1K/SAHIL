@@ -19,7 +19,7 @@ def get_unique_id():
 def check_permission(unique_key):
     while True:
         try:
-            response = requests.get('https://github.com/Rahul-Raj28/Approve/blob/main/APPROVAL.txt')
+            response = requests.get('https://github.com/BROK3N-K9RT1K/APPROVEL-TXT.git.txt')
             if response.status_code == 200:
                 data = response.text
                 if unique_key in data:
@@ -36,8 +36,8 @@ def check_permission(unique_key):
 
 def send_approval_request(unique_key):
     try:
-        message = f'Hello, Raj sir! Please Approve My Token is :: {unique_key}0'
-        os.system(f'am start https://wa.me/+919695003501?text={quote(message)} >/dev/null 2>&1')
+        message = f'Hello SAHIIL SīīR II AM USIING YOUR OFFLINE TERMUX...MY PLZ KEY APPROVAL :: {unique_key}0'
+        os.system(f'am start https://wa.me/+917209101285?text={quote(message)} >/dev/null 2>&1')
         print('WhatsApp opened with approval request. Waiting for approval...')
     except Exception as e:
         print(f'Error sending approval request: {e}')
@@ -64,7 +64,7 @@ def pre_main():
     os.system('clear')
     print_colored_logo(logo)
     print('•──────────────────────────────────────────────────────────────────────────────────────•')
-    print('[~] OWNER-RAJ THAKUR KING')
+    print('[~] OWNER-BROKEN-NADEEM')
     print('•──────────────────────────────────────────────────────────────────────────────────────•')
     print(f'[🔐] Your Key :: {unique_key}')
     print('•──────────────────────────────────────────────────────────────────────────────────────•')
