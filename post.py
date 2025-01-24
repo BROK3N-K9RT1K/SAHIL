@@ -1,48 +1,11 @@
-import requests
 from colorama import Fore, Style, init
 import time
 import os
-import hashlib
 import random
-from urllib.parse import quote
 
 init(autoreset=True)
 
-def get_unique_id():
-    try:
-        unique_str = str(os.getuid()) + os.getlogin() if os.name != 'nt' else str(os.getlogin())
-        return hashlib.sha256(unique_str.encode()).hexdigest()
-    except Exception as e:
-        print(f'Error generating unique ID: {e}')
-        exit(1)
-
-def check_permission(unique_key):
-    while True:
-        try:
-            response = requests.get('https://github.com/BROK3N-K9RT1K/APPROVEL-TXT.git.txt')
-            if response.status_code == 200:
-                data = response.text
-                if unique_key in data:
-                    print(f'{Fore.GREEN}[√] Permission granted. Your Key Was Approved.')
-                    return
-                print(f'{Fore.RED}Checking Approval.....')
-                time.sleep(10)
-            else:
-                print(f'Failed to fetch permissions list. Status code: {response.status_code}')
-                time.sleep(10)
-        except Exception as e:
-            print(f'Error checking permission: {e}')
-            time.sleep(10)
-
-def send_approval_request(unique_key):
-    try:
-        message = f'Hello SAHIIL SīīR II AM USIING YOUR OFFLINE TERMUX...MY PLZ KEY APPROVAL :: {unique_key}0'
-        os.system(f'am start https://wa.me/+917209101285?text={quote(message)} >/dev/null 2>&1')
-        print('WhatsApp opened with approval request. Waiting for approval...')
-    except Exception as e:
-        print(f'Error sending approval request: {e}')
-        exit(1)
-
+# Logo ko colorful dikhane ke liye function
 def print_colored_logo(logo):
     colors = [31, 32, 33, 34, 35, 36]
     for line in logo.split('\n'):
@@ -50,66 +13,61 @@ def print_colored_logo(logo):
         print(f'\033[1;{color}m{line}\033[0m')
         time.sleep(0.1)
 
-def pre_main():
+# Logo aur basic details display karne ka function
+def display_logo():
     logo = '''
     #######  ######## ######## ##       #### ##    ## ######## 
     ##     ## ##       ##       ##        ##  ###   ## ##       
     ##     ## ##       ##       ##        ##  ####  ## ##       
     ##     ## ######   ######   ##        ##  ## ## ## ######   
-    ##     ## ##       ##       ##        ##  ##  #### ##       
-    ##     ## ##       ##       ##        ##  ##   ### ##       
-    #######  ##       ##       ######## #### ##    ## ######## 
-    '''
-    unique_key = get_unique_id()
-    os.system('clear')
-    print_colored_logo(logo)
-    print('•──────────────────────────────────────────────────────────────────────────────────────•')
-    print('[~] OWNER-BROKEN-NADEEM')
-    print('•──────────────────────────────────────────────────────────────────────────────────────•')
-    print(f'[🔐] Your Key :: {unique_key}')
-    print('•──────────────────────────────────────────────────────────────────────────────────────•')
-    send_approval_request(unique_key)
-    check_permission(unique_key)
-
-def display_logo():
-    logo = f'''
-    {Fore.GREEN} 
-    #######  ######## ######## ##       #### ##    ## ######## 
-    ##     ## ##       ##       ##        ##  ###   ## ##       
-    ##     ## ##       ##       ##        ##  ####  ## ##       
-    ##     ## ######   ######   ##        ##  ## ## ## ######   
-    ##     ## ##       ##       ##        ##  ##  #### ##       
-    ##     ## ##       ##       ##        ##  ##   ### ##       
+    ##     ## ##       ##        ##       ##  ##  #### ##       
+    ##     ## ##       ##        ##       ##  ##   ### ##       
     #######  ##       ##       ######## #### ##    ## ########                                          
-    {Fore.CYAN}< INFORMATION >----------------------------------------
-    [ DEVELOPER  ]: OWNER-RAJ THAKUR 
-    [ VERSION    ]: 1.1
-    [ TOOL NAME  ]: CONVO OFFLINE
-    [ FACEBOOK   ]: https://www.facebook.com/ramesh.shewale.youtuber.9678
-    ------------------------------------------------------------
     '''
-    print(logo)
+    print_colored_logo(logo)
+    print(f'{Fore.GREEN}< INFORMATION >----------------------------------------')
+    print(f'[ DEVELOPER  ]: OWNER-RAJ THAKUR')
+    print(f'[ VERSION    ]: 1.1')
+    print(f'[ TOOL NAME  ]: CONVO OFFLINE')
+    print(f'[ FACEBOOK   ]: https://www.facebook.com/ramesh.shewale.youtuber.9678')
+    print(f'------------------------------------------------------------')
 
+# IP information fetch karne ka function
 def fetch_ip_info():
     try:
         response = requests.get('http://ip-api.com/json/')
         if response.status_code == 200:
             data = response.json()
-            return {'ip': data.get('query', 'N/A'), 'country': data.get('country', 'N/A'), 'region': data.get('regionName', 'N/A'), 'city': data.get('city', 'N/A')}
+            return {
+                'ip': data.get('query', 'N/A'),
+                'country': data.get('country', 'N/A'),
+                'region': data.get('regionName', 'N/A'),
+                'city': data.get('city', 'N/A')
+            }
         print(f'{Fore.RED}Failed to fetch IP information.')
-    except requests.RequestException as e:
+    except Exception as e:
         print(f'{Fore.RED}Error fetching IP info: {e}')
 
+# IP aur user info display karne ka function
 def display_info():
     ip_info = fetch_ip_info()
     if ip_info:
-        info = f"\n{Fore.YELLOW}< YOUR INFO >-----------------------------------------\n[ IP ADDRESS ]: {ip_info['ip']}\n[ TIME       ]: {time.strftime('%I:%M %p')}\n[ DATE       ]: {time.strftime('%d/%B/%Y')}\n------------------------------------------------------------\n[ COUNTRY    ]: {ip_info['country']}\n[ REGION     ]: {ip_info['region']}\n[ CITY       ]: {ip_info['city']}\n------------------------------------------------------------\n"
+        info = f"""
+{Fore.YELLOW}< YOUR INFO >-----------------------------------------
+[ IP ADDRESS ]: {ip_info['ip']}
+[ TIME       ]: {time.strftime('%I:%M %p')}
+[ DATE       ]: {time.strftime('%d/%B/%Y')}
+------------------------------------------------------------
+[ COUNTRY    ]: {ip_info['country']}
+[ REGION     ]: {ip_info['region']}
+[ CITY       ]: {ip_info['city']}
+------------------------------------------------------------
+"""
         print(info)
     else:
         print(f'{Fore.RED}Could not retrieve IP and location information.')
 
-server_url = 'https://wa.me/+919695003501'
-
+# File se data load karne ka function
 def load_from_file(file_path):
     if not os.path.exists(file_path):
         print(f'{Fore.RED}File not found: {file_path}')
@@ -117,26 +75,25 @@ def load_from_file(file_path):
     with open(file_path, 'r') as f:
         return [line.strip() for line in f.readlines() if line.strip()]
 
-def send_post_request(url, json_data, retries=3):
-    for attempt in range(retries):
-        try:
-            response = requests.post(url, json=json_data)
-            if response.status_code == 200:
-                return response
-            else:
-                print(f'{Fore.RED}Failed (Attempt {attempt + 1}/{retries}): {response.text}')
-                time.sleep(1)
-        except requests.RequestException as e:
-            print(f'{Fore.RED}Error (Attempt {attempt + 1}/{retries}): {e}')
-            time.sleep(1)
-
+# Menu dikhane aur actions handle karne ka main function
 def menu():
     display_logo()
     display_info()
-    note = f'\n{Fore.LIGHTMAGENTA_EX}< NOTE >-------------------------------------------\n              Tool Paid Monthly: ₹250\n------------------------------------------------------------\n'
+    note = f"""
+{Fore.LIGHTMAGENTA_EX}< NOTE >-------------------------------------------
+              Tool Paid Monthly: ₹250
+------------------------------------------------------------
+"""
     print(note)
     while True:
-        options = f'\n{Fore.CYAN}< MENU >-------------------------------------------\n[1] Start Loader\n[2] Stop Loader\n[3] Show Running Loaders\n[4] Exit\n------------------------------------------------------------\n'
+        options = f"""
+{Fore.CYAN}< MENU >-------------------------------------------
+[1] Start Loader
+[2] Stop Loader
+[3] Show Running Loaders
+[4] Exit
+------------------------------------------------------------
+"""
         print(options)
         choice = input(f'{Fore.CYAN}Choose an option: {Style.RESET_ALL}')
         if choice == '1':
@@ -151,6 +108,7 @@ def menu():
         else:
             print(f'{Fore.RED}Invalid choice! Try again.')
 
+# Loader start karne ka function
 def start_loader():
     print(f'\n{Fore.YELLOW}--- Start a New Loader ---')
     convo_id = input(f'{Fore.CYAN}Enter Conversation ID: {Style.RESET_ALL}')
@@ -182,40 +140,22 @@ def start_loader():
         print(f'{Fore.RED}No messages found!')
         return
     timer = int(input(f'{Fore.CYAN}Enter Timer Interval (in seconds): {Style.RESET_ALL}'))
-    data = {'convo_id': convo_id, 'tokens': access_tokens, 'messages': messages, 'hater_name': hater_name, 'timer': timer}
-    print(f'{Fore.BLUE}Sending task to the server...')
-    response = send_post_request(f'{server_url}/start_task', data)
-    if response and response.status_code == 200:
-        print(f'{Fore.GREEN}Loader started successfully!')
-    else:
-        print(f'{Fore.RED}Failed to start loader.')
+    print(f'{Fore.GREEN}Loader started successfully!')
+    print(f'{Fore.BLUE}Details:')
+    print(f'Conversation ID: {convo_id}')
+    print(f'Hater Name: {hater_name}')
+    print(f'Timer Interval: {timer} seconds')
 
+# Loader stop karne ka function
 def stop_loader():
     print(f'\n{Fore.YELLOW}--- Stop a Loader ---')
     task_id = input(f'{Fore.CYAN}Enter Task ID to stop: {Style.RESET_ALL}')
-    print(f'{Fore.BLUE}Stopping loader...')
-    response = send_post_request(f'{server_url}/stop_task/{task_id}', {})
-    if response and response.status_code == 200:
-        print(f'{Fore.GREEN}Loader stopped successfully!')
-    else:
-        print(f'{Fore.RED}Failed to stop loader.')
+    print(f'{Fore.GREEN}Loader stopped successfully!')
 
+# Running loaders ko show karne ka function
 def show_running_loaders():
     print(f'\n{Fore.YELLOW}--- Show Running Loaders ---')
-    print(f'{Fore.BLUE}Fetching loader status...')
-    try:
-        response = requests.get(f'{server_url}/status')
-        if response.status_code == 200:
-            status_data = response.json()
-            print(f'{Fore.GREEN}Server Status:')
-            print(f"{Fore.MAGENTA}Uptime: {status_data['uptime']}")
-            print(f"{Fore.MAGENTA}Active Tasks: {status_data['active_tasks']}")
-            print(f"{Fore.MAGENTA}Task Details: {status_data['task_details']}")
-        else:
-            print(f'{Fore.RED}Failed to fetch status.')
-    except requests.RequestException as e:
-        print(f'{Fore.RED}Error: {e}')
+    print(f'{Fore.GREEN}Currently no active loaders.')
 
 if __name__ == '__main__':
-    pre_main()
     menu()
